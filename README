@@ -1,0 +1,25 @@
+COJOCARU Andrei 325CD
+
+I have implemented this homework with static ARP table, using knowlages 
+that I've got especialy from lab 4. I've started the homework
+using my personal implementation from lab 4, and added new feautured to it.
+ 
+First I'm verifying if the recived packet is an IP packet, if it is,
+I'm checking if is not ICMP request packet, if it is, I'm sending an ICMP 
+reply packet to the source IP address(for that i created a function that simply
+creates an ICMP package that contains new enthernet header with the new destination that 
+is the source destination, the ip header and new icmp header with type 0), 
+if it is not, I'm cheking the checksum and after that verify the TTL, if the TTL is lower than 1, 
+I'm sending an ICMP time exceeded packet to the source IP address(for that i also make a function
+"send_icmp_time_excided_unreachable" that creates a new packet that contains ethernet header with destnation to source, 
+ip header and icmp headerwith new type). 
+
+If the TTL is greater than 1, I'm decrementing it and move on to the next verificationthat 
+is the best route searching in the routing table, if the destination IP address is in the routing table,
+I'm sending an ICMP destination unreachable packet(that is also creaded and sent using 
+same send_icmp_time_excided_unreachable function, but with diffrent parametres for type) to the source IP address.
+
+After that I'm searching the destination MAC address in the ARP table, Im not verifying 
+if the destination, because I'm using static ARP table.
+
+After all im recalculating the checksum and sending the packet to the destination MAC address.
